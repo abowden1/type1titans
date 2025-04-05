@@ -142,7 +142,7 @@ export default function ProfilePage() {
             <h2 className="text-xl font-semibold mb-4 text-black">About Me</h2>
             <div className="bg-white rounded-lg p-4 mb-6">
               <p className="text-gray-600">
-                This is a placeholder for the user's bio. In a real application, this would be editable by the user.
+                This is a placeholder for the user&apos;s bio. In a real application, this would be editable by the user.
               </p>
             </div>
             
@@ -165,7 +165,7 @@ export default function ProfilePage() {
                 ))
               ) : (
                 <div className="col-span-2 md:col-span-4 text-center py-4">
-                  <p className="text-gray-600">You don't have any friends yet.</p>
+                  <p className="text-gray-600">You don&apos;t have any friends yet.</p>
                   <Link href="/users" className="text-cyan-500 hover:underline mt-2 inline-block">
                     Find friends
                   </Link>

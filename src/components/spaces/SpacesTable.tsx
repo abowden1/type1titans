@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Space } from '@/types/space'
 import { Orbitron } from 'next/font/google'
 
@@ -8,18 +8,28 @@ const orbitron = Orbitron({ subsets: ['latin'] })
 
 interface SpacesTableProps {
   spaces: Space[]
-  onSpaceSelect: (space: Space) => void
+  onSpaceSelect: (space: Space | null) => void
+  selectedSpace: Space | null
+  searchQuery: string
 }
 
-export default function SpacesTable({ spaces, onSpaceSelect }: SpacesTableProps) {
+export default function SpacesTable({ spaces, onSpaceSelect, selectedSpace, searchQuery }: SpacesTableProps) {
   const [activeTab, setActiveTab] = useState<'mine' | 'popular'>('mine')
-  const [selectedSpace, setSelectedSpace] = useState<Space | null>(null)
+  const [internalSelectedSpace, setInternalSelectedSpace] = useState<Space | null>(null)
   
-  // Filter spaces based on active tab (for now, we'll just use all spaces)
-  const filteredSpaces = spaces
+  // Update internal state when prop changes
+  useEffect(() => {
+    setInternalSelectedSpace(selectedSpace)
+  }, [selectedSpace])
+  
+  // Filter spaces based on active tab and search query
+  const filteredSpaces = spaces.filter(space => 
+    space.space.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    space.description.toLowerCase().includes(searchQuery.toLowerCase())
+  )
   
   const handleSpaceClick = (space: Space) => {
-    setSelectedSpace(space)
+    setInternalSelectedSpace(space)
     onSpaceSelect(space)
   }
   
@@ -51,13 +61,13 @@ export default function SpacesTable({ spaces, onSpaceSelect }: SpacesTableProps)
       </div>
       
       {/* Selected Space Details */}
-      {selectedSpace && (
+      {internalSelectedSpace && (
         <div className="mb-6">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-xl font-bold text-black">Space Details</h2>
             <button 
               onClick={() => {
-                setSelectedSpace(null)
+                setInternalSelectedSpace(null)
                 onSpaceSelect(null)
               }}
               className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-400 text-gray-600 hover:text-black hover:border-black transition-colors"
@@ -69,10 +79,10 @@ export default function SpacesTable({ spaces, onSpaceSelect }: SpacesTableProps)
             </button>
           </div>
           <div className="bg-white rounded-lg p-4">
-            <h3 className="text-lg font-semibold text-black mb-2">{selectedSpace.space}</h3>
-            <p className="text-gray-600 mb-4">{selectedSpace.description}</p>
+            <h3 className="text-lg font-semibold text-black mb-2">{internalSelectedSpace.space}</h3>
+            <p className="text-gray-600 mb-4">{internalSelectedSpace.description}</p>
             <div className="text-sm text-gray-500">
-              Created: {new Date(selectedSpace.createdAt).toLocaleDateString('en-US', {
+              Created: {new Date(internalSelectedSpace.createdAt).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
