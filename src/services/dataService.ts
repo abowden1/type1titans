@@ -29,12 +29,25 @@ export function getCurrentUserFriends(): User[] {
 
 // Get all spaces
 export function getAllSpaces(): Space[] {
-  return sampleData.spaces
+  // Add createdAt and updatedAt properties to each space
+  return sampleData.spaces.map(space => ({
+    ...space,
+    createdAt: "2025-01-01T00:00:00.000000", // Default date
+    updatedAt: "2025-01-01T00:00:00.000000"  // Default date
+  }))
 }
 
 // Get a space by ID
 export function getSpaceById(id: string): Space | undefined {
-  return sampleData.spaces.find(space => space.id === id)
+  const space = sampleData.spaces.find(space => space.id === id)
+  if (!space) return undefined
+  
+  // Add createdAt and updatedAt properties
+  return {
+    ...space,
+    createdAt: "2025-01-01T00:00:00.000000", // Default date
+    updatedAt: "2025-01-01T00:00:00.000000"  // Default date
+  }
 }
 
 // Get all posts
