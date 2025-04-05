@@ -4,6 +4,9 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { User } from '@/types/user'
 import UserProfile from './UserProfile'
+import { Orbitron } from 'next/font/google'
+
+const orbitron = Orbitron({ subsets: ['latin'] })
 
 interface UsersTableProps {
   users: User[]
@@ -29,7 +32,7 @@ export default function UsersTable({ users, currentUser }: UsersTableProps) {
       <div className="flex items-center justify-center mb-6 text-black h-14">
         <button
           onClick={() => setActiveTab('all')}
-          className={`px-4 py-2 text-lg ${
+          className={`px-4 py-2 text-lg ${orbitron.className} ${
             activeTab === 'all'
               ? 'border-b-2 border-black font-bold'
               : 'text-gray-600 hover:text-black'
@@ -40,7 +43,7 @@ export default function UsersTable({ users, currentUser }: UsersTableProps) {
         <span className="mx-4 text-gray-600">|</span>
         <button
           onClick={() => setActiveTab('friends')}
-          className={`px-4 py-2 text-lg ${
+          className={`px-4 py-2 text-lg ${orbitron.className} ${
             activeTab === 'friends'
               ? 'border-b-2 border-black font-bold'
               : 'text-gray-600 hover:text-black'
@@ -99,19 +102,25 @@ export default function UsersTable({ users, currentUser }: UsersTableProps) {
                     </div>
                     <div>
                       <p className="font-medium text-black">{user.firstname} {user.lastname}</p>
-                      <p className="text-sm text-gray-600">@{user.username}</p>
+                      <p className="text-sm text-gray-600">{user.username}</p>
                     </div>
                   </div>
                 </td>
-                <td className="py-3 px-4 text-black">{user.email}</td>
-                <td className="py-3 px-4 text-black">
-                  {new Date(user.createdAt).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                  })}
+                <td className="py-3 px-4">
+                  <p className="text-gray-600">{user.email}</p>
                 </td>
-                <td className="py-3 px-4 text-black">{user.friends.length}</td>
+                <td className="py-3 px-4">
+                  <p className="text-gray-600">
+                    {new Date(user.createdAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </p>
+                </td>
+                <td className="py-3 px-4">
+                  <p className="text-gray-600">{user.friends.length}</p>
+                </td>
               </tr>
             ))}
           </tbody>

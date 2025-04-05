@@ -2,6 +2,9 @@
 
 import { useState } from 'react'
 import { Space } from '@/types/space'
+import { Orbitron } from 'next/font/google'
+
+const orbitron = Orbitron({ subsets: ['latin'] })
 
 interface SpacesTableProps {
   spaces: Space[]
@@ -26,7 +29,7 @@ export default function SpacesTable({ spaces, onSpaceSelect }: SpacesTableProps)
       <div className="flex items-center justify-center mb-6 text-black h-14">
         <button
           onClick={() => setActiveTab('mine')}
-          className={`px-4 py-2 text-lg ${
+          className={`px-4 py-2 text-lg ${orbitron.className} ${
             activeTab === 'mine'
               ? 'border-b-2 border-black font-bold'
               : 'text-gray-600 hover:text-black'
@@ -37,7 +40,7 @@ export default function SpacesTable({ spaces, onSpaceSelect }: SpacesTableProps)
         <span className="mx-4 text-gray-600">|</span>
         <button
           onClick={() => setActiveTab('popular')}
-          className={`px-4 py-2 text-lg ${
+          className={`px-4 py-2 text-lg ${orbitron.className} ${
             activeTab === 'popular'
               ? 'border-b-2 border-black font-bold'
               : 'text-gray-600 hover:text-black'
@@ -99,15 +102,17 @@ export default function SpacesTable({ spaces, onSpaceSelect }: SpacesTableProps)
                 <td className="py-3 px-4">
                   <p className="font-medium text-black">{space.space}</p>
                 </td>
-                <td className="py-3 px-4 text-black">
-                  <p className="truncate max-w-xs">{space.description}</p>
+                <td className="py-3 px-4">
+                  <p className="text-gray-600">{space.description}</p>
                 </td>
-                <td className="py-3 px-4 text-black">
-                  {new Date(space.createdAt).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                  })}
+                <td className="py-3 px-4">
+                  <p className="text-gray-600">
+                    {new Date(space.createdAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </p>
                 </td>
               </tr>
             ))}

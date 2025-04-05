@@ -5,6 +5,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getCurrentUser } from '@/services/dataService'
 import { User } from '@/types/user'
+import { Orbitron } from 'next/font/google'
+
+const orbitron = Orbitron({ subsets: ['latin'] })
 
 export default function UserNav() {
   const [isOpen, setIsOpen] = useState(false)
@@ -52,7 +55,7 @@ export default function UserNav() {
         <div className="absolute right-0 mt-2 w-48 bg-[#1E1E1E] rounded-md shadow-lg py-1 z-10">
           {currentUser ? (
             <div className="px-4 py-2 border-b border-gray-700">
-              <p className="text-white font-medium">{currentUser.firstname} {currentUser.lastname}</p>
+              <p className={`text-white font-medium ${orbitron.className}`}>{currentUser.firstname} {currentUser.lastname}</p>
               <p className="text-gray-400 text-sm">@{currentUser.username}</p>
             </div>
           ) : null}
