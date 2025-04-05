@@ -1,0 +1,37 @@
+{
+    "users": [{
+        "id": "uuid",
+        "username": "firstname.lastname",
+        "firstname": "firstname",
+        "lastname": "lastname",
+        "email": "firstname.lastname@gmail.com",
+        "password": "password",
+        "createdAt": "some date close to todays, or slightly in the past",
+        "updatedAt": "same as createdAt",
+        "isTestUser": "boolean - only one of these should be true, the rest should be false"
+    }],
+    "topics": [{
+        "id": "uuid",
+        "topic": "what discussions will be about",
+        "description": "one sentance overview",
+        "createdAt": "some date close to todays, or slightly in the past",
+        "updatedAt": "same as createdAt"
+    }],
+    "posts": [{
+        "id": "uuid",
+        "topicId": "uuid - related to topic",
+        "title": "title of the post",
+        "content": "content of the post",
+        "createdAt": "some date close to todays, or slightly in the past",
+        "updatedAt": "same as createdAt",
+        "upvotes": "integer",
+        "downvotes": "integer",
+    }],
+    "comments": [{
+        "id": "uuid",
+        "content": "content of the comment",
+        "postId": "uuid - related to post",
+        "createdAt": "some date close to todays, or slightly in the past",
+        "updatedAt": "same as createdAt"
+    }]
+}
